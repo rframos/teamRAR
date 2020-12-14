@@ -1,0 +1,244 @@
+<html>
+  <body>
+ <form class="form-horizontal">
+  <fieldset>
+<!-- Form Name -->
+<legend>RAR Land Registration </legend>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">Land ID</label>  
+  <div class="col-md-4">
+  <input id="textinput" name="landid" type="text" placeholder="" class="form-control input-md">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">Land Owner</label>  
+  <div class="col-md-4">
+  <input id="textinput" name="landowner" type="text" placeholder="" class="form-control input-md">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">Restrictions</label>  
+  <div class="col-md-4">
+  <input id="textinput" name="restrictions" type="text" placeholder="" class="form-control input-md">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">City</label>  
+  <div class="col-md-4">
+  <input id="textinput" name="city" type="text" placeholder="" class="form-control input-md">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">Land Rights</label>  
+  <div class="col-md-4">
+  <input id="textinput" name="landrights" type="text" placeholder="" class="form-control input-md">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">Responsibilities</label>  
+  <div class="col-md-4">
+  <input id="textinput" name="responsibilities" type="text" placeholder="" class="form-control input-md">
+    
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="singlebutton"></label>
+  <div class="col-md-4">
+    <button id="btnregister"  class="btn btn-primary">Register</button>
+  </div>
+</div>
+
+</fieldset>
+</form>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/gh/ethereumjs/browser-builds/dist/ethereumjs-tx/ethereumjs-tx-1.3.3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.3.0/web3.min.js" integrity="sha512-ppuvbiAokEJLjOUQ24YmpP7tTaLRgzliuldPRZ01ul6MhRC+B8LzcVkXmUsDee7ne9chUfApa9/pWrIZ3rwTFQ==" crossorigin="anonymous"></script>
+<script>
+  var contract;
+  const web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:8545')); //connect to ganache
+    console.log(web3);
+    web3.eth.net.isListening()
+      .then(() => console.log('Connected'))
+      .catch(() => console.log('Not Connected'));
+      var address = '0xF72B893Da7c051EFD2BC61C35a66C82b214b3A1E';
+      var abi =  [
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_city",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_rights",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_restrictions",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_responsibilities",
+				"type": "string"
+			}
+		],
+		"name": "registerLand",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "_id",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "_landOwner",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "_ownerName",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "_city",
+				"type": "string"
+			}
+		],
+		"name": "registerLandEvent",
+		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "getNumberOfLandRegistered",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getRegisteredLandList",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "landList",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "city",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "rights",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "restrictions",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "responsibilities",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+      contract = new web3.eth.Contract(abi,address);
+       console.log(contract);
+      $('#btnregister').click(function()
+				{
+					web3.eth.getAccounts().then(function(accounts)
+					{
+						var acc = accounts[0];
+            return contract.methods.registerLand("Ten","Manila","Partial","Commercial", "Demo"  ).send({from: acc});
+					}).then(function(tx)
+					{
+						alert(tx) //console.log(tx);
+					}).catch(function(tx)
+					{
+            //console.log(tx);
+            alert(tx)
+					})
+					  return;
+				})
+</script>
+</body>
+</html>
