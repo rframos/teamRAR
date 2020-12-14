@@ -1,60 +1,55 @@
 <html>
   <body>
- <form class="form-horizontal">
+ 
   <fieldset>
 <!-- Form Name -->
 <legend>RAR Land Registration </legend>
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">Land ID</label>  
+  <label class="col-md-4 control-label" for="textinput">Land Owner</label>  
   <div class="col-md-4">
-  <input id="textinput" name="landid" type="text" placeholder="" class="form-control input-md">
+  <input id="landowner1" name="landowner" type="text" placeholder="" class="form-control input-md">
     
   </div>
 </div>
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">Land Owner</label>  
-  <div class="col-md-4">
-  <input id="textinput" name="landowner" type="text" placeholder="" class="form-control input-md">
-    
+	<label class="col-md-4 control-label" for="textinput">City</label>  
+	<div class="col-md-4">
+	<input id="city1" name="city" type="text" placeholder="" class="form-control input-md">
+	  
+	</div>
   </div>
-</div>
+
+  <!-- Text input-->
+<div class="form-group">
+	<label class="col-md-4 control-label" for="textinput">Land Rights</label>  
+	<div class="col-md-4">
+	<input id="landright1" name="landrights" type="text" placeholder="" class="form-control input-md">
+	  
+	</div>
+  </div>
 
 <!-- Text input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="textinput">Restrictions</label>  
   <div class="col-md-4">
-  <input id="textinput" name="restrictions" type="text" placeholder="" class="form-control input-md">
+  <input id="restricts1" name="restrictions" type="text" placeholder="" class="form-control input-md">
     
   </div>
 </div>
 
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">City</label>  
-  <div class="col-md-4">
-  <input id="textinput" name="city" type="text" placeholder="" class="form-control input-md">
-    
-  </div>
-</div>
 
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">Land Rights</label>  
-  <div class="col-md-4">
-  <input id="textinput" name="landrights" type="text" placeholder="" class="form-control input-md">
-    
-  </div>
-</div>
+
+
 
 <!-- Text input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="textinput">Responsibilities</label>  
   <div class="col-md-4">
-  <input id="textinput" name="responsibilities" type="text" placeholder="" class="form-control input-md">
+  <input id="respo1" name="responsibilities" type="text" placeholder="" class="form-control input-md">
     
   </div>
 </div>
@@ -68,7 +63,7 @@
 </div>
 
 </fieldset>
-</form>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/gh/ethereumjs/browser-builds/dist/ethereumjs-tx/ethereumjs-tx-1.3.3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.3.0/web3.min.js" integrity="sha512-ppuvbiAokEJLjOUQ24YmpP7tTaLRgzliuldPRZ01ul6MhRC+B8LzcVkXmUsDee7ne9chUfApa9/pWrIZ3rwTFQ==" crossorigin="anonymous"></script>
@@ -79,7 +74,7 @@
     web3.eth.net.isListening()
       .then(() => console.log('Connected'))
       .catch(() => console.log('Not Connected'));
-      var address = '0xF72B893Da7c051EFD2BC61C35a66C82b214b3A1E';
+      var address = '0x0a9b835Aa27ae0816965A5DF813F694020BDb6cd';
       var abi =  [
 	{
 		"inputs": [
@@ -228,14 +223,15 @@
 					web3.eth.getAccounts().then(function(accounts)
 					{
 						var acc = accounts[0];
-            return contract.methods.registerLand("Ten","Manila","Partial","Commercial", "Demo"  ).send({from: acc});
+						
+            return contract.methods.registerLand($('#landowner1').val(),$('#city1').val(),$('#landright1').val(),$('#restricts1').val(), $('#respo1').val()  ).send({from: acc});
 					}).then(function(tx)
 					{
-						alert(tx) //console.log(tx);
+						console.log(tx);
 					}).catch(function(tx)
 					{
-            //console.log(tx);
-            alert(tx)
+           			 console.log(tx);
+            
 					})
 					  return;
 				})
